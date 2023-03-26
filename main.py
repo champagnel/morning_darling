@@ -106,37 +106,37 @@ data = {
     "color": get_random_color()
   },
   "weather": {
-    "value": weather['weather'],
+    "value": weather,
     "color": get_random_color()
   },
-  "humidity": {
-    "value": weather['humidity'],
-    "color": get_random_color()
-  },
-  "wind": {
-    "value": weather['wind'],
-    "color": get_random_color()
-  },
-  "air_data": {
-    "value": weather['airData'],
-    "color": get_random_color()
-  },
-  "air_quality": {
-    "value": weather['airQuality'],
-    "color": get_random_color()
-  },
-  "temperature": {
-    "value": math.floor(weather['temp']),
-    "color": get_random_color()
-  },
-  "highest": {
-    "value": math.floor(weather['high']),
-    "color": get_random_color()
-  },
-  "lowest": {
-    "value": math.floor(weather['low']),
-    "color": get_random_color()
-  },
+  # "humidity": {
+  #   "value": weather['humidity'],
+  #   "color": get_random_color()
+  # },
+  # "wind": {
+  #   "value": weather['wind'],
+  #   "color": get_random_color()
+  # },
+  # "air_data": {
+  #   "value": weather['airData'],
+  #   "color": get_random_color()
+  # },
+  # "air_quality": {
+  #   "value": weather['airQuality'],
+  #   "color": get_random_color()
+  # },
+  # "temperature": {
+  #   "value": math.floor(weather['temp']),
+  #   "color": get_random_color()
+  # },
+  # "highest": {
+  #   "value": math.floor(weather['high']),
+  #   "color": get_random_color()
+  # },
+  # "lowest": {
+  #   "value": math.floor(weather['low']),
+  #   "color": get_random_color()
+  # },
   "love_days": {
     "value": get_memorial_days_count(),
     "color": get_random_color()
