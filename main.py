@@ -40,7 +40,7 @@ def get_weather():
   res = requests.get(url).json()
   if res is None:
     return None
-  weather = res['lives'][0]['weather']
+  weather = res['lives'][0]
   return weather
 
 # 获取当前日期为星期几
@@ -106,7 +106,7 @@ data = {
     "color": get_random_color()
   },
   "weather": {
-    "value": weather,
+    "value": weather['weather'],
     "color": get_random_color()
   },
   # "humidity": {
@@ -125,10 +125,10 @@ data = {
   #   "value": weather['airQuality'],
   #   "color": get_random_color()
   # },
-  # "temperature": {
-  #   "value": math.floor(weather['temp']),
-  #   "color": get_random_color()
-  # },
+  "temperature": {
+    "value": math.floor(weather['temp']),
+    "color": get_random_color()
+  },
   # "highest": {
   #   "value": math.floor(weather['high']),
   #   "color": get_random_color()
