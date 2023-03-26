@@ -126,7 +126,7 @@ data = {
   #   "color": get_random_color()
   # },
   "temperature": {
-    "value": math.floor(weather['temp']),
+    "value": math.floor(weather['temperature']),
     "color": get_random_color()
   },
   # "highest": {
