@@ -11,7 +11,8 @@ today = datetime.strptime(str(nowtime.date()), "%Y-%m-%d") #今天的日期
 
 start_date = os.getenv('START_DATE')
 city = os.getenv('CITY')
-birthday = os.getenv('BIRTHDAY')
+birthday_1 = os.getenv('BIRTHDAY_1')
+birthday_2 = os.getenv('BIRTHDAY_2')
 
 app_id = os.getenv('APP_ID')
 app_secret = os.getenv('APP_SECRET')
@@ -32,11 +33,22 @@ if template_id is None:
   exit(422)
 
 # weather 直接返回对象，在使用的地方用字段进行调用。
-def get_weather():
+def get_weather_1():
   if city is None:
     print('请设置城市')
     return None
   url = "https://restapi.amap.com/v3/weather/weatherInfo?key=eb3e408763bfbbc686f7ec51296e0e3a&city=511500&extensions=base&output=JSON"
+  res = requests.get(url).json()
+  if res is None:
+    return None
+  weather = res['lives'][0]
+  return weather
+
+def get_weather_2():
+  if city is None:
+    print('请设置城市')
+    return None
+  url = "https://restapi.amap.com/v3/weather/weatherInfo?key=eb3e408763bfbbc686f7ec51296e0e3a&city=330100&extensions=base&output=JSON"
   res = requests.get(url).json()
   if res is None:
     return None
@@ -59,10 +71,19 @@ def get_memorial_days_count():
 
 # 生日倒计时
 def get_birthday_left():
-  if birthday is None:
+  if birthday_1 is None:
     print('没有设置 BIRTHDAY')
     return 0
-  next = datetime.strptime(str(today.year) + "-" + birthday, "%Y-%m-%d")
+  next = datetime.strptime(str(today.year) + "-" + birthday_1, "%Y-%m-%d")
+  if next < nowtime:
+    next = next.replace(year=next.year + 1)
+  return (next - today).days
+
+def get_birthday_right():
+  if birthday_2 is None:
+    print('没有设置 BIRTHDAY')
+    return 0
+  next = datetime.strptime(str(today.year) + "-" + birthday_2, "%Y-%m-%d")
   if next < nowtime:
     next = next.replace(year=next.year + 1)
   return (next - today).days
@@ -88,8 +109,12 @@ except WeChatClientException as e:
   exit(502)
 
 wm = WeChatMessage(client)
-weather = get_weather()
-if weather is None:
+weather_1 = get_weather_1()
+weather_2 = get_weather_1()
+if weather_1 is None:
+  print('获取天气失败')
+  exit(422)
+if weather_2 is None:
   print('获取天气失败')
   exit(422)
 data = {
@@ -105,8 +130,12 @@ data = {
     "value": get_week_day(),
     "color": get_random_color()
   },
-  "weather": {
-    "value": weather['weather'],
+  "weather_1": {
+    "value": weather_1['weather'],
+    "color": get_random_color()
+  },
+  "weather_2": {
+    "value": weather_2['weather'],
     "color": get_random_color()
   },
   # "humidity": {
@@ -125,8 +154,12 @@ data = {
   #   "value": weather['airQuality'],
   #   "color": get_random_color()
   # },
-  "temperature": {
-    "value": weather['temperature'],
+  "temperature_1": {
+    "value": weather_1['temperature'],
+    "color": get_random_color()
+  },
+  "temperature_2": {
+    "value": weather_2['temperature'],
     "color": get_random_color()
   },
   # "highest": {
@@ -143,6 +176,10 @@ data = {
   },
   "birthday_left": {
     "value": get_birthday_left(),
+    "color": get_random_color()
+  },
+  "birthday_right": {
+    "value": get_birthday_right(),
     "color": get_random_color()
   },
   "words": {
