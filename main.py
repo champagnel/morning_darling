@@ -38,22 +38,30 @@ def get_weather_1():
     print('请设置城市')
     return None
   url = "https://restapi.amap.com/v3/weather/weatherInfo?key=eb3e408763bfbbc686f7ec51296e0e3a&city=511500&extensions=base&output=JSON"
-  res = requests.get(url).json()
-  if res is None:
-    return None
-  weather = res['lives'][0]
-  return weather
+  while True:
+    try:
+      res = requests.get(url).json()
+      if res is None:
+        return None
+      weather = res['lives'][0]
+      return weather
+    except (requests.exceptions.RequestException, ValueError):
+      continue
 
 def get_weather_2():
   if city is None:
     print('请设置城市')
     return None
   url = "https://restapi.amap.com/v3/weather/weatherInfo?key=eb3e408763bfbbc686f7ec51296e0e3a&city=330100&extensions=base&output=JSON"
-  res = requests.get(url).json()
-  if res is None:
-    return None
-  weather = res['lives'][0]
-  return weather
+  while True:
+    try:
+      res = requests.get(url).json()
+      if res is None:
+        return None
+      weather = res['lives'][0]
+      return weather
+    except (requests.exceptions.RequestException, ValueError):
+      continue
 
 # 获取当前日期为星期几
 def get_week_day():
