@@ -108,7 +108,9 @@ def format_temperature(temperature):
 
 # 随机颜色
 def get_random_color():
-  return "#%06x" % random.randint(0, 0xFFFFFF)
+  #return "#%06x" % random.randint(0, 0xFFFFFF)
+  r = lambda: random.uniform(0, 1)
+  return [r(), r(), r(), 1]
 
 try:
   client = WeChatClient(app_id, app_secret)
